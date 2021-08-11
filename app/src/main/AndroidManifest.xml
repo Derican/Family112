@@ -19,8 +19,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Family112">
         <activity
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
+        <activity
             android:name=".BasicMapActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
 
         <meta-data
             android:name="com.amap.api.v2.apikey"

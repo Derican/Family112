@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Family112</string>
+    <string name="welcome_text">Welcome</string>
+    <string name="copyright_text">Designed by Derican. All rights reserved.</string>
 </resources>
