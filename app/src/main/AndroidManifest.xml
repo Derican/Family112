@@ -3,7 +3,6 @@
     package="com.example.family112">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -19,9 +18,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Family112">
+        <activity
+            android:name=".BasicMapActivity"
+            android:exported="true" />
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="df480d8c607e069c2a65c94eb01acd24" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
