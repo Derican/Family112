@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.MapView;
@@ -25,6 +26,7 @@ public class BasicMapActivity extends AppCompatActivity {
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             importXlsxBinder = (ImportXlsxService.ImportXlsxBinder) iBinder;
             studentInfos = importXlsxBinder.readXlsx();
+            Log.i("BasicMapActivity", studentInfos.toString());
         }
 
         @Override

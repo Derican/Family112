@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Binder;
 import android.os.IBinder;
+import android.util.Log;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import jxl.Cell;
@@ -33,36 +36,57 @@ public class ImportXlsxService extends Service {
 
     class ImportXlsxBinder extends Binder{
         public ArrayList<StudentInfo> readXlsx(){
+            Log.i("ImportXlsxService","In readXlsx");
             ArrayList<StudentInfo> studentInfos = new ArrayList<>();
 
             AssetManager assetManager = getResources().getAssets();
-            Workbook workbook;
-            Sheet sheet;
-            Cell U_ID, U_NAME, U_CITY, U_UNIVERCITY, U_LONGITUDE, U_LATITUDE;
+            InputStreamReader is = null;
             try{
-                workbook = Workbook.getWorkbook(assetManager.open("112.xlsx"));
-                sheet = workbook.getSheet(0);
-                for(int row = 2; row < 59;row++){
-                    U_ID = sheet.getCell(0, row);
-                    U_NAME = sheet.getCell(1, row);
-                    U_CITY = sheet.getCell(2,row);
-                    U_UNIVERCITY = sheet.getCell(3, row);
-                    U_LONGITUDE =sheet.getCell(5,row);
-                    U_LATITUDE = sheet.getCell(6,row);
-
-                    StudentInfo studentInfo = new StudentInfo(
-                            Integer.parseInt(U_ID.getContents()) - 11200,
-                            Integer.parseInt(U_ID.getContents()),
-                            U_NAME.getContents(),
-                            U_CITY.getContents(),
-                            U_UNIVERCITY.getContents(),
-                            Double.parseDouble(U_LONGITUDE.getContents()),
-                            Double.parseDouble(U_LATITUDE.getContents())
-                    );
+                is = new InputStreamReader(assetManager.open("112.csv"));
+                BufferedReader reader = new BufferedReader(is);
+                reader.readLine();
+                String line;
+                Integer cnt = Integer.valueOf(0);
+                while((line = reader.readLine())!= null){
+                    int id = 0, number = 0;
+                    double longitude = 0.0, latitude = 0.0;
+                    String name = "", city = "", university = "", major = "";
+                    for(String retval: line.split(",")){
+                        switch (cnt){
+                            case 0:
+                                number = Integer.parseInt(retval);
+                                id = number - 11200;
+                                break;
+                            case 1:
+                                name = retval;
+                                break;
+                            case 2:
+                                city = retval;
+                                break;
+                            case 3:
+                                university = retval;
+                                break;
+                            case 4:
+                                major = retval;
+                                break;
+                            case 5:
+                                longitude = Double.parseDouble(retval);
+                                break;
+                            case 6:
+                                latitude = Double.parseDouble(retval);
+                                break;
+                            default:
+                                break;
+                        }
+                        cnt += 1;
+                    }
+                    StudentInfo studentInfo = new StudentInfo(id, number, name, city, university, longitude, latitude);
                     studentInfos.add(studentInfo);
+                    cnt = 0;
                 }
-            }catch (Exception e){
 
+            }catch (Exception e){
+                Log.e("ImportXlsxService","Error",e);
             }
 
             return studentInfos;

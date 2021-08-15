@@ -19,4 +19,17 @@ public class StudentInfo {
         this.longitude = longitude;
         this.latitude = latitude;
     }
+
+    @Override
+    public String toString() {
+        return "StudentInfo{" +
+                "id=" + id +
+                ", studentNumber=" + studentNumber +
+                ", name='" + name + '\'' +
+                ", city='" + city + '\'' +
+                ", university='" + university + '\'' +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                '}' + '\n';
+    }
 }
