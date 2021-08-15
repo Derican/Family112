@@ -1,5 +1,7 @@
 package com.example.family112;
 
+import com.amap.api.maps2d.model.LatLng;
+
 public class StudentInfo {
     /**
      * A simple struct for storing the info of out classmates.
@@ -31,5 +33,9 @@ public class StudentInfo {
                 ", longitude=" + longitude +
                 ", latitude=" + latitude +
                 '}' + '\n';
+    }
+
+    public LatLng getLatLng(){
+        return new LatLng(latitude, longitude);
     }
 }

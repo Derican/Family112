@@ -36,7 +36,6 @@ public class ImportXlsxService extends Service {
 
     class ImportXlsxBinder extends Binder{
         public ArrayList<StudentInfo> readXlsx(){
-            Log.i("ImportXlsxService","In readXlsx");
             ArrayList<StudentInfo> studentInfos = new ArrayList<>();
 
             AssetManager assetManager = getResources().getAssets();
@@ -55,7 +54,7 @@ public class ImportXlsxService extends Service {
                         switch (cnt){
                             case 0:
                                 number = Integer.parseInt(retval);
-                                id = number - 11200;
+                                id = number - 11201;
                                 break;
                             case 1:
                                 name = retval;

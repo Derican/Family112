@@ -11,6 +11,9 @@ import android.util.Log;
 
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.MapView;
+import com.amap.api.maps2d.model.LatLng;
+import com.amap.api.maps2d.model.Marker;
+import com.amap.api.maps2d.model.MarkerOptions;
 
 import java.util.ArrayList;
 
@@ -19,6 +22,7 @@ public class BasicMapActivity extends AppCompatActivity {
     MapView mapView;
     AMap aMap;
     ArrayList<StudentInfo> studentInfos;
+    ArrayList<Marker> markers;
 
     private ImportXlsxService.ImportXlsxBinder importXlsxBinder;
     private ServiceConnection serviceConnection = new ServiceConnection() {
@@ -26,7 +30,7 @@ public class BasicMapActivity extends AppCompatActivity {
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             importXlsxBinder = (ImportXlsxService.ImportXlsxBinder) iBinder;
             studentInfos = importXlsxBinder.readXlsx();
-            Log.i("BasicMapActivity", studentInfos.toString());
+            markers = drawMarkers();
         }
 
         @Override
@@ -70,5 +74,15 @@ public class BasicMapActivity extends AppCompatActivity {
     private void initMarkers(){
         startService(new Intent(this, ImportXlsxService.class));
         bindService(new Intent(this, ImportXlsxService.class),serviceConnection, BIND_AUTO_CREATE);
+    }
+
+    private ArrayList<Marker> drawMarkers(){
+        ArrayList<Marker> markers = new ArrayList<>();
+        for (StudentInfo info: studentInfos) {
+            Marker marker = aMap.addMarker(
+                    new MarkerOptions().position(info.getLatLng()));
+            markers.add(marker);
+        }
+        return markers;
     }
 }
