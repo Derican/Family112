@@ -69,10 +69,10 @@ public class ImportXlsxService extends Service {
                                 major = retval;
                                 break;
                             case 5:
-                                longitude = Double.parseDouble(retval);
+                                longitude = Double.parseDouble(retval) - 0.006581;
                                 break;
                             case 6:
-                                latitude = Double.parseDouble(retval);
+                                latitude = Double.parseDouble(retval) - 0.006628;
                                 break;
                             default:
                                 break;

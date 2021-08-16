@@ -10,7 +10,9 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.amap.api.maps2d.AMap;
+import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.MapView;
+import com.amap.api.maps2d.UiSettings;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
@@ -21,6 +23,7 @@ public class BasicMapActivity extends AppCompatActivity {
 
     MapView mapView;
     AMap aMap;
+    UiSettings uiSettings;
     ArrayList<StudentInfo> studentInfos;
     ArrayList<Marker> markers;
 
@@ -46,6 +49,9 @@ public class BasicMapActivity extends AppCompatActivity {
         mapView = (MapView) findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
         aMap = mapView.getMap();
+        uiSettings = aMap.getUiSettings();
+        uiSettings.setZoomControlsEnabled(false);
+        aMap.moveCamera(CameraUpdateFactory.zoomTo(5));
 
         initMarkers();
     }
