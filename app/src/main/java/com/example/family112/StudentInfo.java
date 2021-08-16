@@ -1,6 +1,6 @@
 package com.example.family112;
 
-import com.amap.api.maps2d.model.LatLng;
+import com.amap.api.maps.model.LatLng;
 
 public class StudentInfo {
     /**
@@ -37,5 +37,9 @@ public class StudentInfo {
 
     public LatLng getLatLng(){
         return new LatLng(latitude, longitude);
+    }
+
+    public String getName(){
+        return name;
     }
 }

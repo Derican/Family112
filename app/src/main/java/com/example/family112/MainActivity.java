@@ -5,9 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.amap.api.maps2d.AMap;
-import com.amap.api.maps2d.MapView;
-
 public class MainActivity extends AppCompatActivity {
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.family112;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ComponentName;
@@ -9,13 +10,14 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.amap.api.maps2d.AMap;
-import com.amap.api.maps2d.CameraUpdateFactory;
-import com.amap.api.maps2d.MapView;
-import com.amap.api.maps2d.UiSettings;
-import com.amap.api.maps2d.model.LatLng;
-import com.amap.api.maps2d.model.Marker;
-import com.amap.api.maps2d.model.MarkerOptions;
+
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.MapView;
+import com.amap.api.maps.UiSettings;
+import com.amap.api.maps.model.CameraPosition;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
@@ -54,6 +56,31 @@ public class BasicMapActivity extends AppCompatActivity {
         aMap.moveCamera(CameraUpdateFactory.zoomTo(5));
 
         initMarkers();
+
+        aMap.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
+            @Override
+            public void onCameraChange(CameraPosition cameraPosition) {
+
+                if(cameraPosition.zoom >= 12){
+                    for(int i = 0; i < markers.size(); i++){
+//                        markers.set(i, aMap.addMarker(new MarkerOptions().position(studentInfos.get(i).getLatLng()).title(studentInfos.get(i).getName())));
+                            markers.get(i).setTitle(studentInfos.get(i).getName());
+                        Log.i("BasicMapActivity -> Detail",cameraPosition.toString());
+                    }
+                }
+                else{
+                    for(int i = 0; i < markers.size(); i++){
+                        markers.get(i).setTitle("");
+                        Log.i("BasicMapActivity",cameraPosition.toString());
+                    }
+                }
+            }
+
+            @Override
+            public void onCameraChangeFinish(CameraPosition cameraPosition) {
+
+            }
+        });
     }
 
     @Override
@@ -67,7 +94,7 @@ public class BasicMapActivity extends AppCompatActivity {
         mapView.onPause();
     }
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
     }
@@ -86,7 +113,8 @@ public class BasicMapActivity extends AppCompatActivity {
         ArrayList<Marker> markers = new ArrayList<>();
         for (StudentInfo info: studentInfos) {
             Marker marker = aMap.addMarker(
-                    new MarkerOptions().position(info.getLatLng()));
+                    new MarkerOptions().position(info.getLatLng()).title(""));
+            marker.setInfoWindowEnable(false);
             markers.add(marker);
         }
         return markers;
