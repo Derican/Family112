@@ -6,15 +6,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
@@ -57,30 +61,30 @@ public class BasicMapActivity extends AppCompatActivity {
 
         initMarkers();
 
-        aMap.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
-            @Override
-            public void onCameraChange(CameraPosition cameraPosition) {
-
-                if(cameraPosition.zoom >= 12){
-                    for(int i = 0; i < markers.size(); i++){
-//                        markers.set(i, aMap.addMarker(new MarkerOptions().position(studentInfos.get(i).getLatLng()).title(studentInfos.get(i).getName())));
-                            markers.get(i).setTitle(studentInfos.get(i).getName());
-                        Log.i("BasicMapActivity -> Detail",cameraPosition.toString());
-                    }
-                }
-                else{
-                    for(int i = 0; i < markers.size(); i++){
-                        markers.get(i).setTitle("");
-                        Log.i("BasicMapActivity",cameraPosition.toString());
-                    }
-                }
-            }
-
-            @Override
-            public void onCameraChangeFinish(CameraPosition cameraPosition) {
-
-            }
-        });
+//        aMap.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
+//            @Override
+//            public void onCameraChange(CameraPosition cameraPosition) {
+//
+//                if(cameraPosition.zoom >= 12){
+//                    for(int i = 0; i < markers.size(); i++){
+////                        markers.set(i, aMap.addMarker(new MarkerOptions().position(studentInfos.get(i).getLatLng()).title(studentInfos.get(i).getName())));
+//                            markers.get(i).setTitle(studentInfos.get(i).getName());
+//                        Log.i("BasicMapActivity -> Detail",cameraPosition.toString());
+//                    }
+//                }
+//                else{
+//                    for(int i = 0; i < markers.size(); i++){
+//                        markers.get(i).setTitle("");
+//                        Log.i("BasicMapActivity",cameraPosition.toString());
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCameraChangeFinish(CameraPosition cameraPosition) {
+//
+//            }
+//        });
     }
 
     @Override
@@ -113,8 +117,13 @@ public class BasicMapActivity extends AppCompatActivity {
         ArrayList<Marker> markers = new ArrayList<>();
         for (StudentInfo info: studentInfos) {
             Marker marker = aMap.addMarker(
-                    new MarkerOptions().position(info.getLatLng()).title(""));
+                    new MarkerOptions().position(info.getLatLng()));
             marker.setInfoWindowEnable(false);
+            View view = null;
+            view = View.inflate(this, R.layout.view_marker, null);
+            TextView textView = ((TextView) view.findViewById(R.id.title));
+            textView.setText(info.getNick());
+            marker.setIcon(BitmapDescriptorFactory.fromView(view));
             markers.add(marker);
         }
         return markers;

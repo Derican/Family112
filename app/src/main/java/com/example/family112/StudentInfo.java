@@ -8,14 +8,16 @@ public class StudentInfo {
      */
     private final int id, studentNumber;
     private final String name;
+    private final String nick;
     private final String city;
     private final String university;
     private final double longitude, latitude;
 
-    public StudentInfo(int id, int studentNumber, String name, String city, String university, double longitude, double latitude) {
+    public StudentInfo(int id, int studentNumber, String name, String nick, String city, String university, double longitude, double latitude) {
         this.id = id;
         this.studentNumber = studentNumber;
         this.name = name;
+        this.nick = nick;
         this.city = city;
         this.university = university;
         this.longitude = longitude;
@@ -28,6 +30,7 @@ public class StudentInfo {
                 "id=" + id +
                 ", studentNumber=" + studentNumber +
                 ", name='" + name + '\'' +
+                ", nick='" + nick + '\'' +
                 ", city='" + city + '\'' +
                 ", university='" + university + '\'' +
                 ", longitude=" + longitude +
@@ -39,7 +42,7 @@ public class StudentInfo {
         return new LatLng(latitude, longitude);
     }
 
-    public String getName(){
-        return name;
+    public String getNick(){
+        return nick;
     }
 }
