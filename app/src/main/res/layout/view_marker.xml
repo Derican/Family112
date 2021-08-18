@@ -3,18 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ImageView
-        android:layout_width="9dp"
-        android:layout_height="15dp"
+        android:layout_width="16dp"
+        android:layout_height="24dp"
         android:src="@drawable/poi_marker_pressed"/>
     <TextView
         android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="16dp"
+        android:layout_height="24dp"
         android:text="@string/default_nick"
         android:textColor="@color/white"
         android:gravity="center_horizontal"
         android:layout_marginTop="0.5dp"
-        android:textSize="6sp"/>
+        android:textSize="11sp"/>
 
 
 </FrameLayout>
