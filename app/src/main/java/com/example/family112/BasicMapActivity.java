@@ -2,6 +2,7 @@ package com.example.family112;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.ComponentName;
 import android.content.Intent;
@@ -73,6 +74,25 @@ public class BasicMapActivity extends AppCompatActivity {
             @Override
             public void onCameraChangeFinish(CameraPosition cameraPosition) {
 
+            }
+        });
+
+        aMap.setOnMarkerClickListener(new AMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                int id = markers.indexOf(marker);
+                DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.info_drawer);
+                TextView nameText = (TextView) findViewById(R.id.name);
+                nameText.setText(studentInfos.get(id).getName());
+                nameText.setTypeface(Typeface.createFromAsset(getAssets(), "font/HGDBS_CNKI.TTF"));
+                TextView cityText = (TextView) findViewById(R.id.city);
+                cityText.setText(studentInfos.get(id).getCity());
+                cityText.setTypeface(Typeface.createFromAsset(getAssets(), "font/HGDBS_CNKI.TTF"));
+                TextView univText = (TextView) findViewById(R.id.univ);
+                univText.setText(studentInfos.get(id).getUniversity());
+                univText.setTypeface(Typeface.createFromAsset(getAssets(), "font/HGDBS_CNKI.TTF"));
+                drawerLayout.openDrawer(findViewById(R.id.right_layout));
+                return true;
             }
         });
     }

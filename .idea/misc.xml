@@ -4,7 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Grady/AndroidStudioProjects/Family112/app/src/main/res/drawable/ic_launcher_background.xml" value="0.22291666666666668" />
-        <entry key="..\:/Users/Grady/AndroidStudioProjects/Family112/app/src/main/res/layout/activity_basic_map.xml" value="0.1" />
+        <entry key="..\:/Users/Grady/AndroidStudioProjects/Family112/app/src/main/res/layout/activity_basic_map.xml" value="0.14" />
+        <entry key="..\:/Users/Grady/AndroidStudioProjects/Family112/app/src/main/res/layout/activity_info_tab.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/Grady/AndroidStudioProjects/Family112/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/Grady/AndroidStudioProjects/Family112/app/src/main/res/layout/activity_splash.xml" value="0.20364583333333333" />
         <entry key="..\:/Users/Grady/AndroidStudioProjects/Family112/app/src/main/res/layout/view_marker.xml" value="1.0" />

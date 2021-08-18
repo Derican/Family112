@@ -3,4 +3,7 @@
     <string name="welcome_text">Welcome</string>
     <string name="copyright_text">Designed by Derican. All rights reserved.</string>
     <string name="default_nick">DJ</string>
+    <string name="default_name">江建岳</string>
+    <string name="default_city">广西桂林</string>
+    <string name="default_univ">铁山工业园</string>
 </resources>

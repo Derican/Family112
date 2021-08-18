@@ -38,11 +38,23 @@ public class StudentInfo {
                 '}' + '\n';
     }
 
-    public LatLng getLatLng(){
+    public LatLng getLatLng() {
         return new LatLng(latitude, longitude);
     }
 
-    public String getNick(){
+    public String getNick() {
         return nick;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getUniversity() {
+        return university;
     }
 }
