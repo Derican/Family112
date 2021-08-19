@@ -91,6 +91,11 @@ public class BasicMapActivity extends AppCompatActivity {
                 TextView univText = (TextView) findViewById(R.id.univ);
                 univText.setText(studentInfos.get(id).getUniversity());
                 univText.setTypeface(Typeface.createFromAsset(getAssets(), "font/HGDBS_CNKI.TTF"));
+                TextView elemText = (TextView) findViewById(R.id.elem);
+//                univText.setText(studentInfos.get(id).getUniversity());
+                TextView descText = (TextView) findViewById(R.id.desc);
+//                descText.setText(studentInfos.get(id).getUniversity());
+                descText.setTypeface(Typeface.createFromAsset(getAssets(), "font/yuweij.ttf"));
                 drawerLayout.openDrawer(findViewById(R.id.right_layout));
                 return true;
             }
