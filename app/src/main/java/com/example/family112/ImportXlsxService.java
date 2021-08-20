@@ -11,10 +11,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import jxl.Cell;
-import jxl.Sheet;
-import jxl.Workbook;
-
 public class ImportXlsxService extends Service {
     public ImportXlsxService() {
     }
@@ -36,7 +32,6 @@ public class ImportXlsxService extends Service {
 
     class ImportXlsxBinder extends Binder{
         public ArrayList<StudentInfo> readXlsx(){
-            Log.i("ImportXlsxService","In readXlsx");
             ArrayList<StudentInfo> studentInfos = new ArrayList<>();
 
             AssetManager assetManager = getResources().getAssets();
@@ -50,37 +45,40 @@ public class ImportXlsxService extends Service {
                 while((line = reader.readLine())!= null){
                     int id = 0, number = 0;
                     double longitude = 0.0, latitude = 0.0;
-                    String name = "", city = "", university = "", major = "";
+                    String name = "", nick = "", city = "", university = "", major = "";
                     for(String retval: line.split(",")){
                         switch (cnt){
                             case 0:
                                 number = Integer.parseInt(retval);
-                                id = number - 11200;
+                                id = number - 11201;
                                 break;
                             case 1:
                                 name = retval;
                                 break;
                             case 2:
-                                city = retval;
+                                nick = retval;
                                 break;
                             case 3:
-                                university = retval;
+                                city = retval;
                                 break;
                             case 4:
-                                major = retval;
+                                university = retval;
                                 break;
                             case 5:
-                                longitude = Double.parseDouble(retval);
+                                major = retval;
                                 break;
                             case 6:
-                                latitude = Double.parseDouble(retval);
+                                longitude = Double.parseDouble(retval) - 0.006581;
+                                break;
+                            case 7:
+                                latitude = Double.parseDouble(retval) - 0.006628;
                                 break;
                             default:
                                 break;
                         }
                         cnt += 1;
                     }
-                    StudentInfo studentInfo = new StudentInfo(id, number, name, city, university, longitude, latitude);
+                    StudentInfo studentInfo = new StudentInfo(id, number, name, nick, city, university, longitude, latitude);
                     studentInfos.add(studentInfo);
                     cnt = 0;
                 }
