@@ -1,14 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BasicMapActivity">
+    tools:context=".BasicMapActivity"
+    android:id="@+id/info_drawer">
 
-    <com.amap.api.maps2d.MapView
-        android:id="@+id/map"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.amap.api.maps.MapView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </com.amap.api.maps.MapView>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/right_layout"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:background="@color/thick_blue">
+
+        <ImageView
+            android:id="@+id/elembg"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:background="@color/thick_blue"
+            android:rotation="-37"
+            android:alpha="0.2">
+
+        </ImageView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="end">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="150dp"
+                android:text="@string/default_name"
+                android:layout_marginEnd="40dp"
+                android:textColor="@color/white"
+                android:textSize="25sp"/>
+
+            <TextView
+                android:id="@+id/city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="40dp"
+                android:text="@string/default_city"
+                android:textColor="@color/white"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/univ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="40dp"
+                android:text="@string/default_univ"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:maxLines="1"/>
+        </LinearLayout>
+    </FrameLayout>
+
+
+
+</androidx.drawerlayout.widget.DrawerLayout>
