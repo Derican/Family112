@@ -26,32 +26,15 @@
         android:layout_gravity="end"
         android:background="@color/thick_blue">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/elem"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="50dp"
-                android:text="@string/default_elem"
-                android:textColor="@color/white"
-                android:rotation="-37"
-                android:textSize="100sp"
-                android:alpha="0.4"/>
-            <TextView
-                android:id="@+id/desc"
-                android:layout_width="250dp"
-                android:layout_height="50dp"
-                android:text="@string/default_desc"
-                android:textColor="@color/white"
-                android:textSize="40sp"
-                android:gravity="center"
-                android:rotation="-37"
-                android:alpha="0.4"/>
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/elembg"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:background="@color/thick_blue"
+            android:rotation="-37"
+            android:alpha="0.2">
+
+        </ImageView>
 
 
         <LinearLayout
@@ -66,26 +49,30 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="150dp"
                 android:text="@string/default_name"
-                android:layout_marginEnd="100dp"
-                android:textColor="@color/white"/>
+                android:layout_marginEnd="40dp"
+                android:textColor="@color/white"
+                android:textSize="25sp"/>
 
             <TextView
                 android:id="@+id/city"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="100dp"
+                android:layout_marginEnd="40dp"
                 android:text="@string/default_city"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/univ"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="100dp"
+                android:layout_marginEnd="40dp"
                 android:text="@string/default_univ"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:maxLines="1"/>
         </LinearLayout>
     </FrameLayout>
 

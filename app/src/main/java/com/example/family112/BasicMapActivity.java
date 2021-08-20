@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -30,6 +31,9 @@ import com.amap.api.maps.model.MarkerOptions;
 import java.util.ArrayList;
 
 public class BasicMapActivity extends AppCompatActivity {
+
+    final int[] elements = {R.drawable.element1, R.drawable.element2, R.drawable.element3, R.drawable.element4, R.drawable.element5,
+            R.drawable.element6, R.drawable.element7, R.drawable.element8, R.drawable.element9, R.drawable.element10, R.drawable.element11, R.drawable.element12, R.drawable.element13, R.drawable.element14, R.drawable.element15, R.drawable.element16, R.drawable.element17, R.drawable.element18, R.drawable.element19, R.drawable.element20, R.drawable.element21, R.drawable.element22, R.drawable.element23, R.drawable.element24, R.drawable.element25, R.drawable.element26, R.drawable.element27, R.drawable.element28, R.drawable.element29, R.drawable.element30, R.drawable.element31, R.drawable.element32, R.drawable.element33, R.drawable.element34, R.drawable.element35, R.drawable.element36, R.drawable.element37, R.drawable.element38, R.drawable.element39, R.drawable.element40, R.drawable.element41, R.drawable.element42, R.drawable.element43, R.drawable.element44, R.drawable.element45, R.drawable.element46, R.drawable.element47, R.drawable.element48, R.drawable.element49, R.drawable.element50, R.drawable.element51, R.drawable.element52, R.drawable.element53, R.drawable.element54, R.drawable.element55, R.drawable.element56, R.drawable.element57};
 
     MapView mapView;
     AMap aMap;
@@ -91,11 +95,8 @@ public class BasicMapActivity extends AppCompatActivity {
                 TextView univText = (TextView) findViewById(R.id.univ);
                 univText.setText(studentInfos.get(id).getUniversity());
                 univText.setTypeface(Typeface.createFromAsset(getAssets(), "font/HGDBS_CNKI.TTF"));
-                TextView elemText = (TextView) findViewById(R.id.elem);
-//                univText.setText(studentInfos.get(id).getUniversity());
-                TextView descText = (TextView) findViewById(R.id.desc);
-//                descText.setText(studentInfos.get(id).getUniversity());
-                descText.setTypeface(Typeface.createFromAsset(getAssets(), "font/yuweij.ttf"));
+                ImageView bg = (ImageView) findViewById(R.id.elembg);
+                bg.setImageResource(elements[id]);
                 drawerLayout.openDrawer(findViewById(R.id.right_layout));
                 return true;
             }
@@ -107,30 +108,33 @@ public class BasicMapActivity extends AppCompatActivity {
         super.onResume();
         mapView.onResume();
     }
+
     @Override
     protected void onPause() {
         super.onPause();
         mapView.onPause();
     }
+
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
     }
 
-    private void initMarkers(){
+    private void initMarkers() {
         startService(new Intent(this, ImportXlsxService.class));
-        bindService(new Intent(this, ImportXlsxService.class),serviceConnection, BIND_AUTO_CREATE);
+        bindService(new Intent(this, ImportXlsxService.class), serviceConnection, BIND_AUTO_CREATE);
     }
 
-    private ArrayList<Marker> drawMarkers(){
+    private ArrayList<Marker> drawMarkers() {
         ArrayList<Marker> markers = new ArrayList<>();
-        for (StudentInfo info: studentInfos) {
+        for (StudentInfo info : studentInfos) {
             Marker marker = aMap.addMarker(
                     new MarkerOptions().position(info.getLatLng()));
             marker.setInfoWindowEnable(false);
@@ -140,7 +144,7 @@ public class BasicMapActivity extends AppCompatActivity {
         return markers;
     }
 
-    private BitmapDescriptor getMarkerDescriptor(String nick, float alpha){
+    private BitmapDescriptor getMarkerDescriptor(String nick, float alpha) {
         View view = null;
         view = View.inflate(this, R.layout.view_marker, null);
         TextView textView = ((TextView) view.findViewById(R.id.title));
