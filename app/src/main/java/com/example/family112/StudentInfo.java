@@ -1,5 +1,7 @@
 package com.example.family112;
 
+import androidx.annotation.NonNull;
+
 import com.amap.api.maps.model.LatLng;
 
 public class StudentInfo {
@@ -24,6 +26,7 @@ public class StudentInfo {
         this.latitude = latitude;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "StudentInfo{" +

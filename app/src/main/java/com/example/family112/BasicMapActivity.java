@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.res.AssetManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -28,6 +29,8 @@ import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class BasicMapActivity extends AppCompatActivity {
@@ -41,25 +44,18 @@ public class BasicMapActivity extends AppCompatActivity {
     ArrayList<StudentInfo> studentInfos;
     ArrayList<Marker> markers;
 
-    private ImportXlsxService.ImportXlsxBinder importXlsxBinder;
-    private ServiceConnection serviceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            importXlsxBinder = (ImportXlsxService.ImportXlsxBinder) iBinder;
-            studentInfos = importXlsxBinder.readXlsx();
-            markers = drawMarkers();
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic_map);
+
+        Thread csvThread = new Thread() {
+            @Override
+            public void run() {
+                readCsv();
+            }
+        };
+        csvThread.start();
         mapView = (MapView) findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
         aMap = mapView.getMap();
@@ -67,7 +63,12 @@ public class BasicMapActivity extends AppCompatActivity {
         uiSettings.setZoomControlsEnabled(true);
         aMap.moveCamera(CameraUpdateFactory.zoomTo(5));
 
-        initMarkers();
+        try {
+            csvThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        drawMarkers();
 
         aMap.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
             @Override
@@ -81,25 +82,22 @@ public class BasicMapActivity extends AppCompatActivity {
             }
         });
 
-        aMap.setOnMarkerClickListener(new AMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                int id = markers.indexOf(marker);
-                DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.info_drawer);
-                TextView nameText = (TextView) findViewById(R.id.name);
-                nameText.setText(studentInfos.get(id).getName());
-                nameText.setTypeface(Typeface.createFromAsset(getAssets(), "font/HGDBS_CNKI.TTF"));
-                TextView cityText = (TextView) findViewById(R.id.city);
-                cityText.setText(studentInfos.get(id).getCity());
-                cityText.setTypeface(Typeface.createFromAsset(getAssets(), "font/HGDBS_CNKI.TTF"));
-                TextView univText = (TextView) findViewById(R.id.univ);
-                univText.setText(studentInfos.get(id).getUniversity());
-                univText.setTypeface(Typeface.createFromAsset(getAssets(), "font/HGDBS_CNKI.TTF"));
-                ImageView bg = (ImageView) findViewById(R.id.elembg);
-                bg.setImageResource(elements[id]);
-                drawerLayout.openDrawer(findViewById(R.id.right_layout));
-                return true;
-            }
+        aMap.setOnMarkerClickListener(marker -> {
+            int id = markers.indexOf(marker);
+            DrawerLayout drawerLayout = findViewById(R.id.info_drawer);
+            TextView nameText = findViewById(R.id.name);
+            nameText.setText(studentInfos.get(id).getName());
+            nameText.setTypeface(Typeface.createFromAsset(getAssets(), "font/HGDBS_CNKI.TTF"));
+            TextView cityText = findViewById(R.id.city);
+            cityText.setText(studentInfos.get(id).getCity());
+            cityText.setTypeface(Typeface.createFromAsset(getAssets(), "font/HGDBS_CNKI.TTF"));
+            TextView univText = findViewById(R.id.univ);
+            univText.setText(studentInfos.get(id).getUniversity());
+            univText.setTypeface(Typeface.createFromAsset(getAssets(), "font/HGDBS_CNKI.TTF"));
+            ImageView bg = findViewById(R.id.elembg);
+            bg.setImageResource(elements[id]);
+            drawerLayout.openDrawer(findViewById(R.id.right_layout));
+            return true;
         });
     }
 
@@ -127,13 +125,64 @@ public class BasicMapActivity extends AppCompatActivity {
         mapView.onDestroy();
     }
 
-    private void initMarkers() {
-        startService(new Intent(this, ImportXlsxService.class));
-        bindService(new Intent(this, ImportXlsxService.class), serviceConnection, BIND_AUTO_CREATE);
+    private void readCsv() {
+        studentInfos = new ArrayList<>();
+        AssetManager assetManager = getResources().getAssets();
+        InputStreamReader is;
+        try {
+            is = new InputStreamReader(assetManager.open("112.csv"));
+            BufferedReader reader = new BufferedReader(is);
+            reader.readLine();
+            String line;
+            Integer cnt = 0;
+            while ((line = reader.readLine()) != null) {
+                int id = 0, number = 0;
+                double longitude = 0.0, latitude = 0.0;
+                String name = "", nick = "", city = "", university = "", major = "";
+                for (String retval : line.split(",")) {
+                    switch (cnt) {
+                        case 0:
+                            number = Integer.parseInt(retval);
+                            id = number - 11201;
+                            break;
+                        case 1:
+                            name = retval;
+                            break;
+                        case 2:
+                            nick = retval;
+                            break;
+                        case 3:
+                            city = retval;
+                            break;
+                        case 4:
+                            university = retval;
+                            break;
+                        case 5:
+                            major = retval;
+                            break;
+                        case 6:
+                            longitude = Double.parseDouble(retval) - 0.006581;
+                            break;
+                        case 7:
+                            latitude = Double.parseDouble(retval) - 0.006628;
+                            break;
+                        default:
+                            break;
+                    }
+                    cnt += 1;
+                }
+                StudentInfo studentInfo = new StudentInfo(id, number, name, nick, city, university, longitude, latitude);
+                studentInfos.add(studentInfo);
+                cnt = 0;
+            }
+
+        } catch (Exception e) {
+            Log.e("ImportXlsxService", "Error", e);
+        }
     }
 
-    private ArrayList<Marker> drawMarkers() {
-        ArrayList<Marker> markers = new ArrayList<>();
+    private void drawMarkers() {
+        markers = new ArrayList<>();
         for (StudentInfo info : studentInfos) {
             Marker marker = aMap.addMarker(
                     new MarkerOptions().position(info.getLatLng()));
@@ -141,13 +190,12 @@ public class BasicMapActivity extends AppCompatActivity {
             marker.setIcon(getMarkerDescriptor(info.getNick(), 1.0f));
             markers.add(marker);
         }
-        return markers;
     }
 
     private BitmapDescriptor getMarkerDescriptor(String nick, float alpha) {
-        View view = null;
+        View view;
         view = View.inflate(this, R.layout.view_marker, null);
-        TextView textView = ((TextView) view.findViewById(R.id.title));
+        TextView textView = view.findViewById(R.id.title);
         textView.setText(nick);
         textView.setAlpha(alpha);
         textView.setTypeface(Typeface.createFromAsset(getAssets(), "font/HGDBS_CNKI.TTF"));

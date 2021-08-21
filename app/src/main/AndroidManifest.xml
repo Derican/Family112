@@ -19,11 +19,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Family112">
 
-        <service
-            android:name=".ImportXlsxService"
-            android:enabled="true"
-            android:exported="true" />
-
         <activity
             android:name=".SplashActivity"
             android:exported="true"
