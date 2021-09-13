@@ -38,6 +38,9 @@ public class BasicMapActivity extends AppCompatActivity {
     final int[] elements = {R.drawable.element1, R.drawable.element2, R.drawable.element3, R.drawable.element4, R.drawable.element5,
             R.drawable.element6, R.drawable.element7, R.drawable.element8, R.drawable.element9, R.drawable.element10, R.drawable.element11, R.drawable.element12, R.drawable.element13, R.drawable.element14, R.drawable.element15, R.drawable.element16, R.drawable.element17, R.drawable.element18, R.drawable.element19, R.drawable.element20, R.drawable.element21, R.drawable.element22, R.drawable.element23, R.drawable.element24, R.drawable.element25, R.drawable.element26, R.drawable.element27, R.drawable.element28, R.drawable.element29, R.drawable.element30, R.drawable.element31, R.drawable.element32, R.drawable.element33, R.drawable.element34, R.drawable.element35, R.drawable.element36, R.drawable.element37, R.drawable.element38, R.drawable.element39, R.drawable.element40, R.drawable.element41, R.drawable.element42, R.drawable.element43, R.drawable.element44, R.drawable.element45, R.drawable.element46, R.drawable.element47, R.drawable.element48, R.drawable.element49, R.drawable.element50, R.drawable.element51, R.drawable.element52, R.drawable.element53, R.drawable.element54, R.drawable.element55, R.drawable.element56, R.drawable.element57};
 
+    final int[] signatures = {R.drawable.signature_01, R.drawable.signature_02, R.drawable.signature_03, R.drawable.signature_04, R.drawable.signature_05, R.drawable.signature_06, R.drawable.signature_07, R.drawable.signature_08, R.drawable.signature_09, R.drawable.signature_10, R.drawable.signature_11, R.drawable.signature_12, R.drawable.signature_13, R.drawable.signature_14, R.drawable.signature_15, R.drawable.signature_16, R.drawable.signature_17, R.drawable.signature_18, R.drawable.signature_19, R.drawable.signature_20, R.drawable.signature_21, R.drawable.signature_22, R.drawable.signature_23, R.drawable.signature_24, R.drawable.signature_25, R.drawable.signature_26, R.drawable.signature_27, R.drawable.signature_28, R.drawable.signature_29, R.drawable.signature_30, R.drawable.signature_31, R.drawable.signature_32, R.drawable.signature_33,
+            R.drawable.signature_34, R.drawable.signature_35, R.drawable.signature_36, R.drawable.signature_37, R.drawable.signature_38, R.drawable.signature_39, R.drawable.signature_40, R.drawable.signature_41, R.drawable.signature_42, R.drawable.signature_43, R.drawable.signature_44, R.drawable.signature_45, R.drawable.signature_46, R.drawable.signature_47, R.drawable.signature_48, R.drawable.signature_49, R.drawable.signature_50, R.drawable.signature_51, R.drawable.signature_52, R.drawable.signature_53, R.drawable.signature_54, R.drawable.signature_55, R.drawable.signature_56, R.drawable.signature_57};
+
     MapView mapView;
     AMap aMap;
     UiSettings uiSettings;
@@ -96,6 +99,8 @@ public class BasicMapActivity extends AppCompatActivity {
             univText.setTypeface(Typeface.createFromAsset(getAssets(), "font/HGDBS_CNKI.TTF"));
             ImageView bg = findViewById(R.id.elembg);
             bg.setImageResource(elements[id]);
+            ImageView si = findViewById(R.id.signaturebg);
+            si.setImageResource(signatures[id]);
             drawerLayout.openDrawer(findViewById(R.id.right_layout));
             return true;
         });
